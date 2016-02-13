@@ -1,6 +1,7 @@
 'use strict';
 
 
+
 /**
  *	Here are the 4 main functions	
  *
@@ -11,7 +12,6 @@ function numToWords(input) {
 	let numberInString = '';
 
 	while (input > 0) {
-
 		switch (Math.floor(input/divisor)) {
 			case 1:
 				if (checkIfTens(divisor) == false) {
@@ -76,13 +76,13 @@ function wordsToCurrency(amount, currency) {
 
 
 function wordsToNum(numberInString) {
-	var numberInInteger = 0;
-	var scales = [], numbers = [];
-	var str = numberInString.split(" ");
-	var temp = 0;
-	var numberChecker;
+	let numberInInteger = 0;
+	let scales = [], numbers = [];
+	let str = numberInString.split(" ");
+	let temp = 0;
+	let numberChecker;
 
-	for (var i = 0; i < str.length; i++) {
+	for (let i = 0; i < str.length; i++) {
 		numberChecker = true;
 
 		switch (str[i]) {
@@ -186,7 +186,7 @@ function wordsToNum(numberInString) {
 
 	while (numbers.length != 0) {
 		if (scales.length != 0) {
-			var currentScale = scales.shift();
+			let currentScale = scales.shift();
 			if (currentScale == 'hundred' && scales[0] == 'thousand') {
 				numberInInteger += (numbers.shift() * 100000) + (numbers.shift() * checkValue(scales.shift()));
 			}
@@ -207,11 +207,31 @@ function wordsToNum(numberInString) {
 
 
 function numberDelimited(number, delimiter, jumps) {
+	let counter = 0;
+	number = number.toString();
 
+	for (let i = number.length - 1; i >= 0; i--) {
+		if (counter == jumps) {	
+			number = [number.slice(0, i+1), number.slice(i+1)].join(delimiter);
+			counter = 0;
+			i++;
+		}
+		else {
+			counter++;
+		}
+	}
+
+	console.log(number);
+
+	return number;
 }
 
 
 
+/**
+ *	Sub-functions
+ *
+ */
 function checkValue(word) {
 
 	switch (word) {
